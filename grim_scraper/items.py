@@ -7,3 +7,4 @@ class GrimItem(scrapy.Item):
     text = scrapy.Field()
     number = scrapy.Field()
     grimoire = scrapy.Field()
+    source = scrapy.Field()
