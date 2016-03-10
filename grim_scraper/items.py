@@ -3,8 +3,7 @@ import scrapy
 
 class GrimItem(scrapy.Item):
     ''' metadata about a book '''
-    isbn = scrapy.Field()
-    date_first_published = scrapy.Field()
-    characters = scrapy.Field()
-    places = scrapy.Field()
-    events = scrapy.Field()
+    title = scrapy.Field()
+    text = scrapy.Field()
+    number = scrapy.Field()
+    grimoire = scrapy.Field()
