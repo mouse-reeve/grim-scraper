@@ -19,13 +19,13 @@ class SacredTextsSpider(scrapy.Spider):
         item = GrimItem()
 
         item['grimoire'] = 'long lost friend'
+        item['label'] = 'spell'
         item['source'] = response.url
         try:
-            item['title'] = response.xpath('//title/text()').extract()[0].split(': ')[-1]
+            item['identifier'] = response.xpath('//title/text()').extract()[0].split(': ')[-1]
         except IndexError:
             return
         item['text'] = '\n'.join(response.xpath('//p/text()').extract()[1:])
-        item['number'] = item['source'].split('.htm')[0][-3:]
 
         item = {key:value for key, value in item.iteritems() if value}
         if len(item) > 1:
