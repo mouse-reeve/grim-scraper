@@ -7,25 +7,25 @@ class SacredTextsSpider(scrapy.Spider):
     ''' Defines the behavior of the crawling spider '''
     name = 'SacredTexts'
     allowed_domains = ['sacred-texts.com']
-    start_urls = ['http://www.sacred-texts.com/ame/pow/index.htm']
+    start_urls = ['http://www.sacred-texts.com/grim/kos/index.htm']
 
     def parse(self, response):
         ''' reads pages' markup '''
         for link in response.xpath('//a/@href'):
             path = link.extract()
-            if re.match(r'pow\d\d\d.htm', path):
-                yield scrapy.http.Request('http://www.sacred-texts.com/ame/pow/' + path)
+            if re.match(r'kos\d\d.htm', path):
+                yield scrapy.http.Request('http://www.sacred-texts.com/grim/kos/' + path)
 
         item = GrimItem()
 
-        item['grimoire'] = 'long lost friend'
+        item['grimoire'] = 'Key of Solomon'
         item['label'] = 'spell'
         item['source'] = response.url
         try:
             item['identifier'] = response.xpath('//title/text()').extract()[0].split(': ')[-1]
         except IndexError:
             return
-        item['text'] = '\n'.join(response.xpath('//p/text()').extract()[1:])
+        item['text'] = '\n'.join(response.xpath('///text()').extract())
 
         item = {key:value for key, value in item.iteritems() if value}
         if len(item) > 1:
